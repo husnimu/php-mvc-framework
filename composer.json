@@ -1,0 +1,15 @@
+{
+  "name": "nimuro/mvc-framework",
+  "authors": [
+    {
+      "name": "husni mubarok",
+      "email": "husni060300@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
+    }
+  },
+  "require": {}
+}
