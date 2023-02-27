@@ -34,14 +34,14 @@ class Database
       $instance = new $className();
       // echo "Applying migration $migration" . PHP_EOL;
       $instance->up();
-      echo "Applied migration $migration" . PHP_EOL;
+      $this->log("Applied migration $migration");
       $newMigrations[] = $migration;
     }
 
     if (!empty($newMigrations)) {
       $this->saveMigrations($newMigrations);
     } else {
-      echo "All migrations are applied" . PHP_EOL;
+      $this->log("All migrations are applied");
     }
   }
 
@@ -68,5 +68,10 @@ class Database
     $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES
     $str");
     $statement->execute();
+  }
+
+  public function log($message)
+  {
+    echo '[' . date('Y-m-d H:i:s') . '] - ' . $message . PHP_EOL;
   }
 }
