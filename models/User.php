@@ -28,6 +28,22 @@ class User extends DbModel
     return ['firstname', 'lastname', 'email', 'status', 'password'];
   }
 
+  public function primaryKey(): string
+  {
+    return 'id';
+  }
+
+  public function labels(): array
+  {
+    return [
+      'firstname' => 'First Name',
+      'lastname' => 'Last Name',
+      'email' => 'Email',
+      'password' => 'Password',
+      'confirmpassword' => 'Confirm Password'
+    ];
+  }
+
   public function rules(): array
   {
     return [

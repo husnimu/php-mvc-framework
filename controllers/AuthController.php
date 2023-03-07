@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
-use app\core\Application;
-use app\core\Request;
-use app\core\Controller;
 use app\models\User;
+use app\core\Request;
+use app\models\Login;
+use app\core\Response;
+use app\core\Controller;
+use app\core\Application;
 
 class AuthController extends Controller
 {
@@ -15,9 +17,20 @@ class AuthController extends Controller
     $this->setLayout('auth');
   }
 
-  public function login()
+  public function login(Request $request, Response $response)
   {
-    return $this->render('login');
+    $login = new Login();
+    if ($request->isPost()) {
+      $login->loadData($request->getBody());
+      if ($login->validate() && $login->login()) {
+        $response->redirect('/');
+        return;
+      }
+      return $this->render('login', [
+        'model' => $login
+      ]);
+    }
+    return $this->render('login', ['model' => $login]);
   }
 
   public function register(Request $request)
