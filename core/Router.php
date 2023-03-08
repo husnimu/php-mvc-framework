@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\exception\NotFound;
+
 class Router
 {
   public Request $request;
@@ -35,10 +37,19 @@ class Router
       // // exit();
       // http_response_code(404);
       // Application::$app->response->setStatusCode(404);
-      $this->response->setStatusCode(404);
-      // return "Not Found";
-      // return $this->renderContent('Not Found');
-      return $this->renderView("code/_404");
+      // $this->response->setStatusCode(404);
+      // // return "Not Found";
+      // // return $this->renderContent('Not Found');
+      // return $this->renderView("code/_404");
+
+      // throw new \Exception('Not Found');
+      throw new NotFound();
+
+      // $e = new \Exception('Not Found', 404);
+      // $this->response->setStatusCode($e->getCode());
+      // echo $this->renderView("_error", [
+      //   'exception' => $e
+      // ]);
     }
     if (is_string($callback)) {
       return $this->renderView($callback);
@@ -46,8 +57,14 @@ class Router
     // echo call_user_func($callback);
     if (is_array($callback)) {
       // $callback[0] = new $callback[0]();
-      Application::$app->controller = new $callback[0]();
-      $callback[0] = Application::$app->controller;
+      /** @var Controller $controller */
+      $controller = new $callback[0]();
+      Application::$app->controller = $controller;
+      $controller->action = $callback[1];
+      foreach ($controller->getMiddlewares() as $middleware) {
+        $middleware->execute();
+      }
+      $callback[0] = $controller;
     }
     return call_user_func($callback, $this->request, $this->response);
   }
@@ -67,7 +84,10 @@ class Router
 
   protected function layoutContent()
   {
-    $layout = Application::$app->controller->layout;
+    $layout = Application::$app->layout;
+    if (Application::$app->controller) {
+      $layout = Application::$app->controller->layout;
+    }
     ob_start();
     include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
     return ob_get_clean();
