@@ -3,8 +3,9 @@
 namespace app\core\form;
 
 use app\core\Model;
+use app\core\form\BaseField;
 
-class Field
+class InputField extends BaseField
 {
 
   public const TYPE_TEXT = 'text';
@@ -19,8 +20,7 @@ class Field
   public function __construct(Model $model, $attribute)
   {
     $this->type = self::TYPE_TEXT;
-    $this->model = $model;
-    $this->attribute = $attribute;
+    parent::__construct($model, $attribute);
   }
 
   public function __toString()
@@ -29,17 +29,14 @@ class Field
       '
     <div class="form-group">
         <label class="form-label">%s</label>
-        <input type="%s" name="%s" value="%s" class="form-control %s">
+        %s
         <div class="invalid-feedback">
           %s
         </div>
 </div>
 ',
       $this->model->getLabel($this->attribute),
-      $this->type,
-      $this->attribute,
-      $this->model->{$this->attribute},
-      $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+      $this->renderInput(),
       $this->model->getFirstError($this->attribute)
     );
   }
@@ -60,5 +57,17 @@ class Field
   {
     $this->type = self::TYPE_NUMBER;
     return $this;
+  }
+
+
+  public function renderInput(): string
+  {
+    return sprintf(
+      '<input type="%s" name="%s" value="%s" class="form-control %s">',
+      $this->type,
+      $this->attribute,
+      $this->model->{$this->attribute},
+      $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+    );
   }
 }

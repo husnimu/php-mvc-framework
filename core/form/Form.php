@@ -3,7 +3,8 @@
 namespace app\core\form;
 
 use app\core\Model;
-use app\core\form\Field;
+use app\core\form\InputField;
+use app\core\form\TextAreaField;
 
 class Form
 {
@@ -19,8 +20,13 @@ class Form
     echo '</form>';
   }
 
-  public function field(Model $model, $attribute)
+  public function inputField(Model $model, $attribute)
   {
-    return new Field($model, $attribute);
+    return new InputField($model, $attribute);
+  }
+
+  public function textAreaField(Model $model, $attribute)
+  {
+    return new TextAreaField($model, $attribute);
   }
 }

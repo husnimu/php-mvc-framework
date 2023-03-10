@@ -4,8 +4,8 @@ $form = \app\core\form\Form::begin('', 'post')
 
 ?>
 
-<?= $form->field($model, 'email')->emailField() ?>
-<?= $form->field($model, 'password')->passwordField() ?>
+<?= $form->inputField($model, 'email')->emailField() ?>
+<?= $form->inputField($model, 'password')->passwordField() ?>
 
 <button type="submit" class="btn btn-primary">Login</button>
 <?= \app\core\form\Form::end() ?>

@@ -1,19 +1,18 @@
-<form action="" method="POST">
-  <div class="mb-3">
-    <label class="form-label">Subject</label>
-    <input type="text" class="form-control" name="subject">
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input type="email" class="form-control" name="email">
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Content</label>
-    <input type="text" class="form-control" name="content">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<?php
+
+use app\core\form\Form;
+
+/** @var $this \app\core\View */
+/** @var $model \app\models\Contact */
+$this->title = 'Contact';
+?>
+
+<h1>Contact</h1>
+
+<?php $form = Form::begin('', 'post') ?>
+<?php echo $form->inputField($model, 'subject') ?>
+<?php echo $form->inputField($model, 'email') ?>
+<?php echo $form->textAreaField($model, 'message') ?>
+<button type="submit" class="btn btn-primary">Submit</button>
+
+<?php Form::end() ?>

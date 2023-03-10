@@ -4,15 +4,15 @@ $form = \app\core\form\Form::begin('', 'post')
 
 <div class="row">
   <div class="col">
-    <?= $form->field($model, 'firstname') ?>
+    <?= $form->inputField($model, 'firstname') ?>
   </div>
   <div class="col">
-    <?= $form->field($model, 'lastname') ?>
+    <?= $form->inputField($model, 'lastname') ?>
   </div>
 </div>
-<?= $form->field($model, 'email')->emailField() ?>
-<?= $form->field($model, 'password')->passwordField() ?>
-<?= $form->field($model, 'confirmpassword')->passwordField() ?>
+<?= $form->inputField($model, 'email')->emailField() ?>
+<?= $form->inputField($model, 'password')->passwordField() ?>
+<?= $form->inputField($model, 'confirmpassword')->passwordField() ?>
 
 <button type="submit" class="btn btn-primary">Register</button>
 <?= \app\core\form\Form::end() ?>
