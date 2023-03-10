@@ -2,6 +2,8 @@
 
 namespace app\core\db;
 
+use app\core\Application;
+
 class Database
 {
   public \PDO $pdo;
