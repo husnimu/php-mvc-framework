@@ -20,6 +20,11 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
+// for logging
+$app->on(Application::EVENT_BEFORE_REQUEST, function () {
+  echo "before request";
+});
+
 // $app->router->get('/', function () {
 //   return "hello world";
 // });
